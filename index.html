@@ -1,102 +1,124 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>عيد ميلاد سعيد!</title>
+  <title>🎉 عيد ميلاد سعيد 🎉</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('https://i.imgur.com/WJYCUQy.jpg') center/cover no-repeat;
-      font-family: 'Cairo', sans-serif;
       direction: rtl;
-      overflow: hidden;
-    }#music {
-  display: none;
-}
+      background: linear-gradient(to bottom right, #ffe0f0, #fff6f6);
+      font-family: 'Tahoma', sans-serif;
+    }
 
-.teddy {
-  position: absolute;
-  bottom: 0;
-  left: -200px;
-  width: 200px;
-  transition: left 3s ease-in-out;
-}
+    .card {
+      text-align: center;
+      padding: 40px 20px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px #ffb6c1;
+    }
 
-.text {
-  position: absolute;
-  top: 20%;
-  width: 100%;
-  text-align: center;
-  font-size: 36px;
-  color: #fff;
-  text-shadow: 2px 2px 4px #000;
-}
+    .emoji {
+      font-size: 60px;
+      animation: float 3s ease-in-out infinite;
+    }
 
-.cake {
-  position: absolute;
-  bottom: 20px;
-  right: -200px;
-  width: 180px;
-  transition: right 3s ease-in-out;
-}
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
 
-.heart {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background: url('https://i.imgur.com/LG0O3Gj.png') center/contain no-repeat;
-  animation: floatUp 5s infinite ease-in;
-}
+    .text {
+      font-size: 22px;
+      margin-top: 20px;
+      min-height: 80px;
+      transition: all 0.5s;
+    }
 
-@keyframes floatUp {
-  0% {transform: translateY(0); opacity: 1;}
-  100% {transform: translateY(-600px); opacity: 0;}
-}
+    .cake {
+      font-size: 50px;
+      margin-top: 20px;
+      display: none;
+    }
 
+    .btn {
+      margin-top: 30px;
+      background-color: #ff69b4;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      color: white;
+      display: none;
+    }
+
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <audio id="music" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_775b7be512.mp3?filename=birthday-96134.mp3" type="audio/mpeg">
-  </audio>  <img class="teddy" id="teddy" src="https://i.imgur.com/XLqKHez.png" alt="Teddy">
-  <div class="text" id="message"></div>
-  <img class="cake" id="cake" src="https://i.imgur.com/I6t0KHK.png" alt="Cake">  <script>
-    const teddy = document.getElementById('teddy');
-    const message = document.getElementById('message');
-    const cake = document.getElementById('cake');
-    const music = document.getElementById('music');
+  <div class="card">
+    <div class="emoji">🧸</div>
+    <div class="text" id="text"> </div>
+    <div class="cake" id="cake">🎂</div>
+    <button class="btn" id="btn" onclick="showFinalMessage()">افتح الرسالة 💌</button>
+    <audio id="music" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_72e6935dc3.mp3?filename=happy-birthday-to-you-piano-version-13685.mp3" autoplay loop></audio>
+  </div>
 
-    let hearts = [];
-    function spawnHearts() {
-      for (let i = 0; i < 15; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '100vh';
-        document.body.appendChild(heart);
-        hearts.push(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }
+  <script>
+    const text = document.getElementById("text");
+    const btn = document.getElementById("btn");
+    const cake = document.getElementById("cake");
+    const music = document.getElementById("music");
+
+    let finalMessage = "ان شاء الله تبقي سنه جديدة كلها فرحة ونجاح وتحققي فيها كل حاجة نفسك فيها 💖🎉"; // ← رسالتك هنا
+
+    function typeWriter(message, callback) {
+      let i = 0;
+      text.textContent = "";
+      const typing = setInterval(() => {
+        text.textContent += message[i];
+        i++;
+        if (i >= message.length) {
+          clearInterval(typing);
+          if (callback) callback();
+        }
+      }, 100);
     }
 
-    function startSequence() {
-      teddy.style.left = '30px';
-      music.play();
-      spawnHearts();
-      setTimeout(() => {
-        message.textContent = 'كل سنة وانتي طيبة يا نور';
-      }, 3000);
-      setTimeout(() => {
-        message.textContent = 'كل سنة وانتي طيبة يا...';
-      }, 6000);
-      setTimeout(() => {
-        message.textContent = 'كل سنة وانتي طيبة يا مريم ❤️';
-      }, 9000);
-      setTimeout(() => {
-        cake.style.right = '30px';
-      }, 12000);
-    }
+    // تبدأ الموسيقى فورًا
+    window.addEventListener('load', () => {
+      music.play().catch(() => {
+        // لو المتصفح منع التشغيل التلقائي
+        document.body.addEventListener('click', () => {
+          music.play();
+        }, { once: true });
+      });
 
-    window.onload = startSequence;
-  </script></body>
+      typeWriter("كل سنة وانتي طيبة يا نور 🎈", () => {
+        setTimeout(() => {
+          text.textContent = "كل سنة وانتي طيبة يا ...";
+          setTimeout(() => {
+            typeWriter("كل سنة وانتي طيبة يا مريم 🎉", () => {
+              btn.style.display = "inline-block";
+            });
+          }, 1500);
+        }, 1500);
+      });
+    });
+
+    function showFinalMessage() {
+      text.textContent = finalMessage;
+      cake.style.display = "block";
+      btn.style.display = "none";
+    }
+  </script>
+</body>
 </html>
