@@ -1,76 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎉 Happy Birthday 🎂</title>
+  <meta charset="UTF-8">
+  <title>عيد ميلاد سعيد!</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-      color: #fff;
-    }
+      background: url('https://i.imgur.com/WJYCUQy.jpg') center/cover no-repeat;
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      overflow: hidden;
+    }#music {
+  display: none;
+}
 
-    .card {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 40px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      animation: pop 1s ease forwards;
-    }
+.teddy {
+  position: absolute;
+  bottom: 0;
+  left: -200px;
+  width: 200px;
+  transition: left 3s ease-in-out;
+}
 
-    .card h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
+.text {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+  font-size: 36px;
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+}
 
-    .card p {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
+.cake {
+  position: absolute;
+  bottom: 20px;
+  right: -200px;
+  width: 180px;
+  transition: right 3s ease-in-out;
+}
 
-    .card button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #ff6b6b;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+.heart {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url('https://i.imgur.com/LG0O3Gj.png') center/contain no-repeat;
+  animation: floatUp 5s infinite ease-in;
+}
 
-    .card button:hover {
-      background-color: #ff4757;
-    }
+@keyframes floatUp {
+  0% {transform: translateY(0); opacity: 1;}
+  100% {transform: translateY(-600px); opacity: 0;}
+}
 
-    @keyframes pop {
-      0% {
-        transform: scale(0);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <h1>🎈 Happy Birthday! 🎂</h1>
-    <p>كل سنة وانت طيب 🎉</p>
-    <p>يوم جميل وسعيد عليك 🎁</p>
-    <button onclick="alert('🎉🎉🎉 كل سنة وانت طيب! 🎉🎉🎉')">اضغط هنا 🎊</button>
-  </div>
+  <audio id="music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_775b7be512.mp3?filename=birthday-96134.mp3" type="audio/mpeg">
+  </audio>  <img class="teddy" id="teddy" src="https://i.imgur.com/XLqKHez.png" alt="Teddy">
+  <div class="text" id="message"></div>
+  <img class="cake" id="cake" src="https://i.imgur.com/I6t0KHK.png" alt="Cake">  <script>
+    const teddy = document.getElementById('teddy');
+    const message = document.getElementById('message');
+    const cake = document.getElementById('cake');
+    const music = document.getElementById('music');
 
-  <script>
-    console.log('Happy Birthday 🎉');
-  </script>
-</body>
+    let hearts = [];
+    function spawnHearts() {
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        document.body.appendChild(heart);
+        hearts.push(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+
+    function startSequence() {
+      teddy.style.left = '30px';
+      music.play();
+      spawnHearts();
+      setTimeout(() => {
+        message.textContent = 'كل سنة وانتي طيبة يا نور';
+      }, 3000);
+      setTimeout(() => {
+        message.textContent = 'كل سنة وانتي طيبة يا...';
+      }, 6000);
+      setTimeout(() => {
+        message.textContent = 'كل سنة وانتي طيبة يا مريم ❤️';
+      }, 9000);
+      setTimeout(() => {
+        cake.style.right = '30px';
+      }, 12000);
+    }
+
+    window.onload = startSequence;
+  </script></body>
 </html>
