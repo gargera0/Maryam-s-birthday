@@ -57,10 +57,6 @@
       color: white;
       display: none;
     }
-
-    audio {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -69,16 +65,14 @@
     <div class="text" id="text"> </div>
     <div class="cake" id="cake">🎂</div>
     <button class="btn" id="btn" onclick="showFinalMessage()">افتح الرسالة 💌</button>
-    <audio id="music" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_72e6935dc3.mp3?filename=happy-birthday-to-you-piano-version-13685.mp3" autoplay loop></audio>
   </div>
 
   <script>
     const text = document.getElementById("text");
     const btn = document.getElementById("btn");
     const cake = document.getElementById("cake");
-    const music = document.getElementById("music");
 
-    let finalMessage = "ان شاء الله تبقي سنه جديدة كلها فرحة ونجاح وتحققي فيها كل حاجة نفسك فيها 💖🎉"; // ← رسالتك هنا
+    let finalMessage = "يارب تكون أيامك كلها سعادة وضحك زي ما بتضحكيني دايمًا 🎈💖🎂"; // ← اكتب هنا رسالتك
 
     function typeWriter(message, callback) {
       let i = 0;
@@ -93,25 +87,16 @@
       }, 100);
     }
 
-    // تبدأ الموسيقى فورًا
-    window.addEventListener('load', () => {
-      music.play().catch(() => {
-        // لو المتصفح منع التشغيل التلقائي
-        document.body.addEventListener('click', () => {
-          music.play();
-        }, { once: true });
-      });
-
-      typeWriter("كل سنة وانتي طيبة يا نور 🎈", () => {
+    // Sequence
+    typeWriter("كل سنة وانتي طيبة يا نور 🎈", () => {
+      setTimeout(() => {
+        text.textContent = "كل سنة وانتي طيبة يا ...";
         setTimeout(() => {
-          text.textContent = "كل سنة وانتي طيبة يا ...";
-          setTimeout(() => {
-            typeWriter("كل سنة وانتي طيبة يا مريم 🎉", () => {
-              btn.style.display = "inline-block";
-            });
-          }, 1500);
+          typeWriter("كل سنة وانتي طيبة يا مريم 🎉", () => {
+            btn.style.display = "inline-block";
+          });
         }, 1500);
-      });
+      }, 1500);
     });
 
     function showFinalMessage() {
